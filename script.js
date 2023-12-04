@@ -5,6 +5,7 @@ const answerD = document.querySelector("#answerD");
 const answerSheet = document.querySelector(".answerSheet");
 const quizContainer = document.querySelector(".container");
 const questionPresenter = document.querySelector(".questionTitle");
+const subAnswers = document.querySelector(".submit-answers");
 
 
 const quizAnswerSheet = [["answerA"], ["answerB", "answerC"]];
@@ -57,14 +58,39 @@ const questions = [
         ans: "answerC",
         
     },
+    {
+        question: "5: Hummingbirds can fly backwards",
+        type: "btnAns",
+        alt: {
+            answerA: "True",
+            answerB: "False",
+            
+        },
+        ans: "answerA",
+        
+    },
+    {
+        question: "6: What is Floyd Mayweather most famous for?",
+        type: "btnAns",
+        alt: {
+            answerA: "Singing",
+            answerB: "Painting",
+            answerC: "Terrorist",
+            answerD: "Boxer"
+            
+        },
+        ans: "answerD",
+        
+    }
 ];
 
+let rightArr = [];
 let currentQuestIndex = 0;
 const questTitle = document.createElement("h2");
 questTitle.textContent = "Start your quiz!";
 questionPresenter.append(questTitle);
 const startQ = document.querySelector("#startQuiz");
-
+let rightAnswers = 0;
 
     const currentQuest = questions[currentQuestIndex];
 
@@ -89,16 +115,51 @@ const startQ = document.querySelector("#startQuiz");
 
     answerSheet.append(answerA);
     
+    let currentAnswerIndex = 0;
+    const answerAll = document.querySelectorAll("[id^=answer]");
     
-    const answerAll = document.querySelectorAll("button[id^=answer]");
+
+    
+
+
+
+
     
     answerAll.forEach(btn => {
         btn.addEventListener("click", event => {
+
+            if(currentQuestIndex >= questions.length) {
+                answerSheet.remove();
+                questTitle.textContent = "Well done! Lets see your results."
+                submitQuiz();
+                return;
+            }
             
             const currentQuest = questions[currentQuestIndex];
+            const correctAnswerBtn = currentQuest.ans;
+            // console.log(currentQuest.type);
+            
+            if(currentQuestIndex < questions.length) {
+                
+                if(currentQuest.type === "btnAns"){
+                    // console.log(correctAnswerBtn);
+                    answerA.innerText = currentQuest.alt.answerA;
+                    // console.log(currentQuest.question);
+                }
+                if(currentQuest.type === "checkAns") {
+                    
+                }
+                currentQuestIndex++;
+            }
+
+            // console.log("alt button " + btn.id);
+            
+
             answerB.classList.remove("hide");
-            currentQuest.alt.C && answerC.classList.remove("hide");
-            currentQuest.alt.answerD && answerD.classList.remove("hide")
+            answerC.textContent = "";
+
+            currentQuest.alt.answerC ? answerC.classList.remove("hide") : answerC.classList.add("hide");
+            currentQuest.alt.answerD ? answerD.classList.remove("hide"): answerD.classList.add("hide");
             
             answerSheet.innerHTML ="";
             answerSheet.append(answerA,answerB, answerC, answerD);
@@ -110,62 +171,51 @@ const startQ = document.querySelector("#startQuiz");
     
             questTitle.innerText = "";
             questTitle.innerText = currentQuest.question;
-            answerA.innerText = currentQuest.alt.answerA;
-            answerB.textContent = currentQuest.alt.answerB;
-            answerC.textContent = currentQuest.alt.answerC;
-            answerD.textContent = currentQuest.alt.answerD;
+            answerA.value = currentQuest.alt.answerA;
+            answerB.value = currentQuest.alt.answerB;
+            answerC.value = currentQuest.alt.answerC;
+            answerD.value = currentQuest.alt.answerD;
             const answerButtons = [answerA, answerB, answerC, answerD];
-            
-            answerButtons.forEach((button, index) => {
-                const answerKey = `answer${String.fromCharCode(65 + index)}`;
-                const answerText = currentQuest.alt[answerKey];
-
-                if(answerText) {
-                    button.textContent = answerText;
-                }
-            })
-            
-            console.log(btn.id);
-            if(currentQuestIndex < questions.length) {
-                
-                if(currentQuest.type === "btnAns"){
-                    const correctAnswerBtn = currentQuest.ans;
-                    console.log(correctAnswerBtn);
                     
-                    if(btn.id === correctAnswerBtn) {
-                        console.log("Right");
-                    }
-                    
-                    
-                    
-                    
-                    answerA.innerText = currentQuest.alt.answerA;
-                    console.log(currentQuest.question);
-                }
-                
-                if(currentQuest.type === "checkAns") {
-                    
-                }
-                
-                
-                currentQuestIndex++;
+            if(event.target === correctAnswerBtn) {
+                console.log("Right");
+                console.log(currentQuest.question);
+                rightArr.push(currentQuest.question);
+                rightAnswers++;
             }
             
-            
-        
+            console.log(rightArr);
         });
+        
     });
 
+    
 
 
 
+    const submitQuiz = () => {
+    
+        const subBtn = document.createElement("button");
+        subBtn.textContent = "Submit";
+        subAnswers.append(subBtn);
+
+        subBtn.addEventListener("click", () => {
+            questions.forEach((quest) => {
+            
+                ansPara = document.createElement("h3");
+                ansPara.textContent = quest.question;
+        
+                rightArr.includes(quest.question) && ansPara.style.color === "green";
+                subAnswers.innerHTML = "";
+                subAnswers.append(ansPara);
+            })
+        })
+        
+        
+    }
 
 
 
-
-
-
-let currentAnswerIndex = 0;
 
 
 
