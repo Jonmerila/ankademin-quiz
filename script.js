@@ -129,17 +129,18 @@ let rightAnswers = 0;
         subAnswers.append(subBtn);
         console.log(arr);
         console.log("done");
-        // subBtn.addEventListener("click", () => {
-        //     questions.forEach((quest) => {
+        subBtn.addEventListener("click", () => {
+            subAnswers.innerHTML = "";
+
+            questions.forEach((quest) => {
             
-        //         ansPara = document.createElement("h3");
-        //         ansPara.textContent = quest.question;
+                ansPara = document.createElement("h3");
+                ansPara.textContent = quest.question;
         
-        //         rightArr.includes(quest.question) && ansPara.style.color === "green";
-        //         subAnswers.innerHTML = "";
-        //         subAnswers.append(ansPara);
-        //     })
-        // })
+                rightArr.includes(quest.question) ? ansPara.style.color = "green" : ansPara.style.color = "red";
+                subAnswers.append(ansPara);
+            })
+        })
           
     }
 
@@ -150,34 +151,39 @@ startQ.addEventListener("click", () => {
 })
 
 let createQuestion = (btn) => {
-    // om btn finns, rätta frågan, byt sen till nästa fråga
-    // if(isFirstQ){
-        //Om sant, startar quizet, gå inte vidare utan till första frågan!
+    if(currentQuestIndex >= questions.length) {
+        answerSheet.remove();
+        questTitle.textContent = "Well done! Lets see your results.";
+        submitQuiz(rightArr);
+        return;
+    }
 
-        // return;
-    // } //annars går du vidare
     const currentQuest = questions[currentQuestIndex];
     const correctAnswerBtn = currentQuest.ans;
-
+    //gör en prev question type variabel
+    
 
     if(btn !== undefined) {
+        const prevQuestion = questions[currentQuestIndex -1];
+        const prevAnswer = prevQuestion.ans;
+
         //Kan läggas i en annan function som "rättnings" funktion
         
-        console.log("Correct: " + correctAnswerBtn, "Your ans: "+ btn.id);
-        if(btn.id === correctAnswerBtn) {
+        console.log("Correct: " + prevAnswer, "Your ans: "+ btn.id);
+        if(btn.id === prevAnswer) {
             console.log("Right");
-            console.log(currentQuest.question);
-            rightArr.push(currentQuest.question);
+            console.log(prevQuestion.question);
+            rightArr.push(prevQuestion.question);
             rightAnswers++;
             console.log(rightArr);
         } else {
             console.log("Wrong");
         }
-        currentQuestIndex++;
+        
     }
 
     console.log(currentQuest.question);
-    console.log(correctAnswerBtn.ans);
+    console.log(correctAnswerBtn);
 
     console.log(btn);
 
@@ -215,6 +221,7 @@ let createQuestion = (btn) => {
 
         }
         if(currentQuest.type === "checkAns") {   
+
         }
     
         
@@ -244,18 +251,13 @@ let createQuestion = (btn) => {
         // }
 
 
-        if(currentQuestIndex >= questions.length) {
-            answerSheet.remove();
-            questTitle.textContent = "Well done! Lets see your results.";
-            submitQuiz(rightArr);
-            return;
-        }
+        
         
     }
 
     currentQuest.alt.answerC ? answerC.classList.remove("hide") : answerC.classList.add("hide");
     currentQuest.alt.answerD ? answerD.classList.remove("hide"): answerD.classList.add("hide");
-    
+    currentQuestIndex++;
 }
     
 answerAll.forEach(btn => {
@@ -291,7 +293,7 @@ answerAll.forEach(btn => {
 
 
 
- // Question 1 körs och question countern börjar på 1, 
+ // Question 1 körs och question countern börjar på 0, 
  //när ett svar ges så blir det answer++ och nästa fråga körs.
  //När nästa fråga ställs så ska logiken gå igenom answer varibeln och kolla
  //värdet och sedan kolla om answer index stämmer rätt med answerSheet arrayen.
