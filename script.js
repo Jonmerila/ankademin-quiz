@@ -86,17 +86,18 @@ const questions = [
 
 let rightArr = [];
 let currentQuestIndex = 0;
+
 const questTitle = document.createElement("h2");
 questTitle.textContent = "Start your quiz!";
 questionPresenter.append(questTitle);
-const startQ = document.querySelector("#startQuiz");
+const startQ = document.querySelector("#startQ");
 let rightAnswers = 0;
 
     const currentQuest = questions[currentQuestIndex];
 
     
     // const answerA = document.createElement("button");
-    answerA.innerText = "Start Quiz!";
+    answerA.innerText = "Answer A";
     // answerA.setAttribute("id", "answerA");
     
     
@@ -121,103 +122,146 @@ let rightAnswers = 0;
 
     
 
-
-
-
-    
-    answerAll.forEach(btn => {
-        btn.addEventListener("click", event => {
-
-            if(currentQuestIndex >= questions.length) {
-                answerSheet.remove();
-                questTitle.textContent = "Well done! Lets see your results."
-                submitQuiz();
-                return;
-            }
-            
-            const currentQuest = questions[currentQuestIndex];
-            const correctAnswerBtn = currentQuest.ans;
-            // console.log(currentQuest.type);
-            
-            if(currentQuestIndex < questions.length) {
-                
-                if(currentQuest.type === "btnAns"){
-                    // console.log(correctAnswerBtn);
-                    answerA.innerText = currentQuest.alt.answerA;
-                    // console.log(currentQuest.question);
-                }
-                if(currentQuest.type === "checkAns") {
-                    
-                }
-                currentQuestIndex++;
-            }
-
-            // console.log("alt button " + btn.id);
-            
-
-            answerB.classList.remove("hide");
-            answerC.textContent = "";
-
-            currentQuest.alt.answerC ? answerC.classList.remove("hide") : answerC.classList.add("hide");
-            currentQuest.alt.answerD ? answerD.classList.remove("hide"): answerD.classList.add("hide");
-            
-            answerSheet.innerHTML ="";
-            answerSheet.append(answerA,answerB, answerC, answerD);
-            
-            
-            questTitle.innerText = "";
-            questTitle.innerText = currentQuest.question;
-
-    
-            questTitle.innerText = "";
-            questTitle.innerText = currentQuest.question;
-            answerA.value = currentQuest.alt.answerA;
-            answerB.value = currentQuest.alt.answerB;
-            answerC.value = currentQuest.alt.answerC;
-            answerD.value = currentQuest.alt.answerD;
-            const answerButtons = [answerA, answerB, answerC, answerD];
-                    
-            if(event.target === correctAnswerBtn) {
-                console.log("Right");
-                console.log(currentQuest.question);
-                rightArr.push(currentQuest.question);
-                rightAnswers++;
-            }
-            
-            console.log(rightArr);
-        });
-        
-    });
-
-    
-
-
-
-    const submitQuiz = () => {
+    const submitQuiz = (arr) => {
     
         const subBtn = document.createElement("button");
         subBtn.textContent = "Submit";
         subAnswers.append(subBtn);
-
-        subBtn.addEventListener("click", () => {
-            questions.forEach((quest) => {
+        console.log(arr);
+        console.log("done");
+        // subBtn.addEventListener("click", () => {
+        //     questions.forEach((quest) => {
             
-                ansPara = document.createElement("h3");
-                ansPara.textContent = quest.question;
+        //         ansPara = document.createElement("h3");
+        //         ansPara.textContent = quest.question;
         
-                rightArr.includes(quest.question) && ansPara.style.color === "green";
-                subAnswers.innerHTML = "";
-                subAnswers.append(ansPara);
-            })
-        })
+        //         rightArr.includes(quest.question) && ansPara.style.color === "green";
+        //         subAnswers.innerHTML = "";
+        //         subAnswers.append(ansPara);
+        //     })
+        // })
+          
+    }
+
+startQ.addEventListener("click", () => {
+    startQ.remove();
+    createQuestion();
+    
+})
+
+let createQuestion = (btn) => {
+    // om btn finns, rätta frågan, byt sen till nästa fråga
+    // if(isFirstQ){
+        //Om sant, startar quizet, gå inte vidare utan till första frågan!
+
+        // return;
+    // } //annars går du vidare
+    const currentQuest = questions[currentQuestIndex];
+    const correctAnswerBtn = currentQuest.ans;
+
+
+    if(btn !== undefined) {
+        //Kan läggas i en annan function som "rättnings" funktion
         
+        console.log("Correct: " + correctAnswerBtn, "Your ans: "+ btn.id);
+        if(btn.id === correctAnswerBtn) {
+            console.log("Right");
+            console.log(currentQuest.question);
+            rightArr.push(currentQuest.question);
+            rightAnswers++;
+            console.log(rightArr);
+        } else {
+            console.log("Wrong");
+        }
+        currentQuestIndex++;
+    }
+
+    console.log(currentQuest.question);
+    console.log(correctAnswerBtn.ans);
+
+    console.log(btn);
+
+
+    if(btn === undefined) {
+        console.log("Starting");
+    
+    
+
+        if(currentQuest.type === "btnAns"){         
+        }
+        if(currentQuest.type === "checkAns"){    
+        }
+          
+
+
+    
+        answerA.classList.remove("hide");
+        answerB.classList.remove("hide");
+
+    
+        
+        
+        questTitle.innerText = "";
+        questTitle.innerText = currentQuest.question;
+        answerA.value = currentQuest.alt.answerA;
+        answerB.value = currentQuest.alt.answerB;
+        answerC.value = currentQuest.alt.answerC;
+        answerD.value = currentQuest.alt.answerD;
+        answerSheet.append(answerA,answerB, answerC, answerD);
+        
+        
+    } else {
+        if(currentQuest.type === "btnAns"){
+
+        }
+        if(currentQuest.type === "checkAns") {   
+        }
+    
+        
+        answerSheet.innerHTML ="";
+        answerSheet.append(answerA,answerB, answerC, answerD);
+    
+        questTitle.innerText = currentQuest.question;
+        answerA.value = currentQuest.alt.answerA;
+        answerB.value = currentQuest.alt.answerB;
+        answerC.value = currentQuest.alt.answerC;
+        answerD.value = currentQuest.alt.answerD;
+    
+    
+        // if(currentQuestIndex < questions.length) {
+        //     Kan läggas i en annan function som "rättnings" funktion
+            
+        //     console.log("Correct: " + correctAnswerBtn, "Your ans: "+ btn.id);
+        //     if(btn.id === correctAnswerBtn) {
+        //         console.log("Right");
+        //         console.log(currentQuest.question);
+        //         rightArr.push(currentQuest.question);
+        //         rightAnswers++;
+        //         console.log(rightArr);
+        //     } else {
+        //         console.log("Wrong");
+        //     }
+        // }
+
+
+        if(currentQuestIndex >= questions.length) {
+            answerSheet.remove();
+            questTitle.textContent = "Well done! Lets see your results.";
+            submitQuiz(rightArr);
+            return;
+        }
         
     }
 
-
-
-
-
+    currentQuest.alt.answerC ? answerC.classList.remove("hide") : answerC.classList.add("hide");
+    currentQuest.alt.answerD ? answerD.classList.remove("hide"): answerD.classList.add("hide");
+    
+}
+    
+answerAll.forEach(btn => {
+    btn.addEventListener("click", (event) => createQuestion(event.target) );
+    
+});
 
 
                     // for(let i=0; i<numOfKeys; i++) {
@@ -226,7 +270,7 @@ let rightAnswers = 0;
                     //         console.log(currentQuest.ans[i]);
                     //     }
                     // }
-
+//console.log("kill me");
 // answerAll.forEach(btn => {
 //     btn.addEventListener('click', event => {
 //         quizAnswerSheet.forEach((elem) => {
