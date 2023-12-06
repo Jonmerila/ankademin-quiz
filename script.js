@@ -2,6 +2,7 @@ const answerA = document.querySelector("#answerA");
 const answerB = document.querySelector("#answerB");
 const answerC = document.querySelector("#answerC");
 const answerD = document.querySelector("#answerD");
+
 const answerSheet = document.querySelector(".answerSheet");
 const quizContainer = document.querySelector(".container");
 const questionPresenter = document.querySelector(".questionTitle");
@@ -95,7 +96,12 @@ const startQ = document.querySelector("#startQ");
 let rightAnswers = 0;
 let currentAnswerIndex = 0;
 const currentQuest = questions[currentQuestIndex];
+const nxtBtn = document.createElement("input");
+nxtBtn.setAttribute("type", "button");
+nxtBtn.setAttribute("id", "answerE");
+nxtBtn.value = "Next";
 const answerAll = document.querySelectorAll("[id^=answer]");
+console.log(answerAll);
 
     
     const submitQuiz = (arr) => {
@@ -193,10 +199,13 @@ let createQuestion = (btn) => {
             });
         }
         if(currentQuest.type === "checkAns") { 
-            const nxtBtn = document.createElement("button");
-            nxtBtn.setAttribute("id", "answer");
-            nxtBtn.textContent = "Next";
-            answerSheet.append(nxtBtn);
+            // const nxtBtn = document.createElement("input");
+            // nxtBtn.setAttribute("type", "button");
+            // nxtBtn.setAttribute("id", "answer");
+            // nxtBtn.value = "Next";
+            quizContainer.append(nxtBtn);
+            //Varför kan inte append till answerSheet??
+            console.log(answerSheet);
             answerAll.forEach((button) => {
                 button.setAttribute("type", "checkbox");
             });
@@ -206,7 +215,6 @@ let createQuestion = (btn) => {
         
         answerSheet.innerHTML ="";
         answerSheet.append(answerA,answerB, answerC, answerD);
-    
         questTitle.innerText = currentQuest.question;
         answerA.value = currentQuest.alt.answerA;
         answerB.value = currentQuest.alt.answerB;
@@ -243,6 +251,11 @@ answerAll.forEach(btn => {
     btn.addEventListener("click", (event) => createQuestion(event.target) );
     
 });
+
+
+
+
+
 
 
                     // for(let i=0; i<numOfKeys; i++) {
