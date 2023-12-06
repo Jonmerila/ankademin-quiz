@@ -47,7 +47,7 @@ const questions = [
     },
     {
         question: "4: Check the boxes that are to the right:",
-        type: "btnAns",
+        type: "checkAns",
         alt: {
             answerA: "Not here",
             answerB: "Not here",
@@ -91,37 +91,13 @@ const questTitle = document.createElement("h2");
 questTitle.textContent = "Start your quiz!";
 questionPresenter.append(questTitle);
 const startQ = document.querySelector("#startQ");
+
 let rightAnswers = 0;
-
-    const currentQuest = questions[currentQuestIndex];
-
-    
-    // const answerA = document.createElement("button");
-    answerA.innerText = "Answer A";
-    // answerA.setAttribute("id", "answerA");
-    
-    
-    // const answerB = document.createElement("button");
-    answerB.innerText = "Answer B";
-    // answerB.setAttribute("id", "answerB");
-    
-    
-    // const answerC = document.createElement("button");
-    answerC.innerText = "Answer C";
-    // answerC.setAttribute("id", "answerC");
-
-    // const answerD = document.createElement("button");
-    answerD.innerText = "Answer D";
-    // answerD.setAttribute("id", "answerD");
-
-    answerSheet.append(answerA);
-    
-    let currentAnswerIndex = 0;
-    const answerAll = document.querySelectorAll("[id^=answer]");
-    
+let currentAnswerIndex = 0;
+const currentQuest = questions[currentQuestIndex];
+const answerAll = document.querySelectorAll("[id^=answer]");
 
     
-
     const submitQuiz = (arr) => {
     
         const subBtn = document.createElement("button");
@@ -136,7 +112,6 @@ let rightAnswers = 0;
             
                 ansPara = document.createElement("h3");
                 ansPara.textContent = quest.question;
-        
                 rightArr.includes(quest.question) ? ansPara.style.color = "green" : ansPara.style.color = "red";
                 subAnswers.append(ansPara);
             })
@@ -147,7 +122,6 @@ let rightAnswers = 0;
 startQ.addEventListener("click", () => {
     startQ.remove();
     createQuestion();
-    
 })
 
 let createQuestion = (btn) => {
@@ -182,10 +156,6 @@ let createQuestion = (btn) => {
         
     }
 
-    console.log(currentQuest.question);
-    console.log(correctAnswerBtn);
-
-    console.log(btn);
 
 
     if(btn === undefined) {
@@ -218,10 +188,19 @@ let createQuestion = (btn) => {
         
     } else {
         if(currentQuest.type === "btnAns"){
-
+            answerAll.forEach((button) => {
+                button.setAttribute("type", "button");
+            });
         }
-        if(currentQuest.type === "checkAns") {   
-
+        if(currentQuest.type === "checkAns") { 
+            const nxtBtn = document.createElement("button");
+            nxtBtn.setAttribute("id", "answer");
+            nxtBtn.textContent = "Next";
+            answerSheet.append(nxtBtn);
+            answerAll.forEach((button) => {
+                button.setAttribute("type", "checkbox");
+            });
+            
         }
     
         
