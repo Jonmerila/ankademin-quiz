@@ -83,6 +83,7 @@ const questions = [
 ];
 
 let rightArr = [];
+const answerOptions = ["A", "B", "C", "D"];
 let currentQuestIndex = 0;
 
 const questTitle = document.createElement("h2");
@@ -101,12 +102,18 @@ nxtBtn.value = "Next";
 const answerAll = document.querySelectorAll("[id^=answer]");
 console.log(answerAll);
 
-    
-answerAll.forEach(btn => {
-    if(btn.type === "button") {
-        btn.addEventListener("click", (event) => createQuestion(event.target) );
-    }
-});
+const createQ = (event) => {
+    createQuestion(event.target)}
+
+const eventListener = (btn) => {
+    console.log("Function körs");
+        console.log(btn);
+        if(btn.type === "button") {
+            console.log("Rätt typ, evlist körs");
+            btn.addEventListener("click", createQ);
+        }
+}
+
 
 const submitQuiz = (arr) => {
     
@@ -130,6 +137,9 @@ const submitQuiz = (arr) => {
 }
 
 const correction = (btn) => {
+    if(btn === "startQ"){
+        return;
+    };
     console.log("btn is: " + btn);
     let nodeArray = [];
     const prevQuestion = questions[currentQuestIndex -1];
@@ -137,13 +147,11 @@ const correction = (btn) => {
     if(btn instanceof NodeList){
         btn.forEach((elem) => {
             nodeArray.push(elem.id);
-        })
-        // console.log("Right nodelist shit");
-            // console.log(prevQuestion.question);
-            
+        });
             
             if(nodeArray.toString() === prevAnswer.toString()) {
                 console.log("you fucken did it");
+                rightArr.push(prevQuestion.question);
                 rightAnswers++;
                 
                 return;
@@ -180,10 +188,17 @@ const correction = (btn) => {
     
 }
 
+const answerOpt = () => {
+    answerOptions.forEach((option) => {
+        const answerBtn = document.querySelector(`#answer${option}`);
+        answerBtn.value = currentQuest.alt[`answer${option}`];
+        answerBtn.addEventListener("click", createQ);
+    });
+}
 
 startQ.addEventListener("click", () => {
     startQ.remove();
-    createQuestion();
+    createQuestion(startQ.id);
 })
 
 let createQuestion = (btn) => {
@@ -198,11 +213,11 @@ let createQuestion = (btn) => {
     const correctAnswerBtn = currentQuest.ans;
     //gör en prev question type variabel
     console.log("First btn log " + btn);
-    // correction(btn);
+    correction(btn);
 
 
 
-    if(btn === undefined) {
+    if(btn === "startQ") {
         console.log("Starting");
     
     
@@ -228,45 +243,50 @@ let createQuestion = (btn) => {
         answerC.value = currentQuest.alt.answerC;
         answerD.value = currentQuest.alt.answerD;
         answerSheet.append(answerA,answerB, answerC, answerD);
+        answerA.addEventListener("click", createQ);
+        answerB.addEventListener("click", createQ);
+        answerC.addEventListener("click", createQ);
+        answerD.addEventListener("click", createQ);
+        //Loopa igenom, ge nytt värde och lägg till eventlistener
+        //{`answer` + letter}
+        answerOpt();
         
         
     } else {
-        console.log("continue");
+        console.log("continue", btn);
         if(currentQuest.type === "btnAns"){
-            answerAll.forEach((button) => {
-                if(button.getAttribute("type") === "checkbox"){
-                    button.setAttribute("type", "button");
+            
+            answerAll.forEach((elem) => {
+                    elem.setAttribute("type", "button");
                     console.log("buttons set");
+                    elem.addEventListener("click", createQ);
 
-                }
-            });
 
+            })
         }
         if(currentQuest.type === "checkAns") { 
+
             console.log("Check type");
             
             //Varför kan inte append till answerSheet??
-            quizContainer.innerHTML ="";
+            // quizContainer.innerHTML ="";
             answerAll.forEach((button) => {
-                // button.setAttribute("type", "checkbox");
-                
-                const checkBox = document.createElement("input");
-                checkBox.setAttribute("type", "checkbox");
-                checkBox.setAttribute("id", button.id);
-                console.log(answerSheet);
-                quizContainer.append(checkBox);
-                quizContainer.append(nxtBtn);
-                
-                
-                
-                
+                button.removeEventListener("click", createQ);
+                button.type = "checkbox";
             });
+            // button.setAttribute("type", "checkbox");
+                // const checkBox = document.createElement("input");
+                // checkBox.setAttribute("type", "checkbox");
+                // checkBox.setAttribute("id", button.id);
+                // console.log(answerSheet);
+                // quizContainer.append(checkBox);
+                quizContainer.append(nxtBtn);
             nxtBtn.addEventListener("click", (event) => {
                 const checkedAns = document.querySelectorAll("input[type='checkbox']:checked");
                 // checkedAns.forEach((box) => {
                 //     correction(box.id);
                 // })
-                console.log(checkedAns.id);
+                console.log("ans id is " + checkedAns);
                 correction(checkedAns);
                 createQuestion(nxtBtn);
                 nxtBtn.remove();
@@ -280,16 +300,21 @@ let createQuestion = (btn) => {
             
             
         }
-    
-        
+        console.log("here now");
+        console.log(answerA.getAttribute("type"));
         answerSheet.innerHTML ="";
         answerSheet.append(answerA,answerB, answerC, answerD);
         questTitle.innerText = currentQuest.question;
+        
         answerA.value = currentQuest.alt.answerA;
         answerB.value = currentQuest.alt.answerB;
         answerC.value = currentQuest.alt.answerC;
         answerD.value = currentQuest.alt.answerD;
+        //kör event listener function
+        
     }
+    
+    
 
     currentQuest.alt.answerC ? answerC.classList.remove("hide") : answerC.classList.add("hide");
     currentQuest.alt.answerD ? answerD.classList.remove("hide"): answerD.classList.add("hide");
