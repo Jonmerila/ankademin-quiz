@@ -1,3 +1,38 @@
 .hide {
     display:none;
 }
+
+
+body {
+    border: 1px solid black;
+    border-radius: 50%;
+    height: 400px;
+    width:400px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+
+    p {
+        font-size: 12px;
+       
+    }
+     .questionTitle{
+        width: 70%;
+     }
+    .answerSheet {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    #answerNxt {
+        align-self:center;
+    }
+}

@@ -79,6 +79,55 @@ const questions = [
         },
         ans: "answerD",
         
+    },
+    {
+        question: "7: The Earth is flat.",
+        alt: {
+            answerA: "True",
+            answerB: "False",
+                
+        },
+        ans: "answerB",
+        
+    },
+    {
+        question: "8: Choose the planets that have 'rings' around them.",
+        type: "checkAns",
+        alt: {
+            answerA: "Earth",
+            answerB: "Saturn",
+            answerC: "Uranus",
+            answerD: "Mars"
+            
+        },
+        ans: ["answerB", "answerC"],
+        
+    },
+    {
+        question: "9: Which planet in the solar system is known as the 'Red Planet'?",
+        type: "btnAns",
+        alt: {
+            answerA: "Venus",
+            answerB: "Jupiter",
+            answerC: "Mars",
+            answerD: "Saturn"
+            
+        },
+        ans: "answerC",
+        
+    },
+    {
+        question: "10: Who was the first human to step on the moon?",
+        type: "btnAns",
+        alt: {
+            answerA: "Buzz Aldrin",
+            answerB: "Yuri Gagarin",
+            answerC: "Harry Potter",
+            answerD: "Neil Armstrong"
+            
+        },
+        ans: "answerD",
+        
     }
 ];
 
@@ -96,32 +145,51 @@ let currentAnswerIndex = 0;
 const currentQuest = questions[currentQuestIndex];
 const nxtBtn = document.createElement("input");
 nxtBtn.setAttribute("type", "button");
-nxtBtn.setAttribute("id", "answerNxt");
+nxtBtn.setAttribute("id", "nextAns");
 nxtBtn.value = "Next";
 
 const answerAll = document.querySelectorAll("[id^=answer]");
-console.log(answerAll);
+// console.log(answerAll);
 
 const createQ = (event) => {
     createQuestion(event.target)}
 
 const eventListener = (btn) => {
     console.log("Function körs");
-        console.log(btn);
+        // console.log(btn);
         if(btn.type === "button") {
-            console.log("Rätt typ, evlist körs");
+            // console.log("Rätt typ, evlist körs");
             btn.addEventListener("click", createQ);
         }
 }
 
 
+// quizContainer.append(nxtBtn);
+                
+nxtBtn.addEventListener("click", (event) => {
+    const checkedAns = document.querySelectorAll("input[type='checkbox']:checked");
+    // checkedAns.forEach((box) => {
+    //     correction(box.id);
+    // })
+    console.log("ans id is " + checkedAns);
+    correction(checkedAns);
+    checkedAns.forEach((box) => {
+        box.checked = false;
+    })
+
+    answerSheet.innerHTML = "";
+    createQuestion(nxtBtn);
+    nxtBtn.remove();
+
+});
+
 const submitQuiz = (arr) => {
-    
+
     const subBtn = document.createElement("button");
     subBtn.textContent = "Submit";
     subAnswers.append(subBtn);
-    console.log(arr);
-    console.log("done");
+    // console.log(arr);
+    // console.log("done");
 
     subBtn.addEventListener("click", () => {
         subAnswers.innerHTML = "";
@@ -133,14 +201,14 @@ const submitQuiz = (arr) => {
             subAnswers.append(ansPara);
         })
     })
-          
+        
 }
 
 const correction = (btn) => {
     if(btn === "startQ"){
         return;
     };
-    console.log("btn is: " + btn);
+    // console.log("btn is: " + btn);
     let nodeArray = [];
     const prevQuestion = questions[currentQuestIndex -1];
     const prevAnswer = prevQuestion.ans;
@@ -150,14 +218,13 @@ const correction = (btn) => {
         });
             
             if(nodeArray.toString() === prevAnswer.toString()) {
-                console.log("you fucken did it");
                 rightArr.push(prevQuestion.question);
                 rightAnswers++;
                 
                 return;
             } else {
-                console.log("Wrong " + nodeArray + " The answer was " + prevAnswer);
-                console.log(nodeArray, prevAnswer)
+                // console.log("Wrong " + nodeArray + " The answer was " + prevAnswer);
+                // console.log(nodeArray, prevAnswer)
             }
             return;
         
@@ -166,21 +233,21 @@ const correction = (btn) => {
     if(btn !== undefined) {
         
         const ans = btn.id;
-        console.log("Correct: " + prevAnswer, "Your ans: "+ btn.id);
+        // console.log("Correct: " + prevAnswer, "Your ans: "+ btn.id);
         if(ans === prevAnswer) {
-            console.log("Right");
-            console.log(prevQuestion.question);
+            // console.log("Right");
+            // console.log(prevQuestion.question);
             rightArr.push(prevQuestion.question);
             rightAnswers++;
-            console.log(rightArr);
+            // console.log(rightArr);
         } else {
-            console.log("Wrong");
+            // console.log("Wrong");
         }
         return;
     }
-    if(btn.id === "answerNxt") {
+    if(btn.id === "nextAns") {
         btn.forEach((elem) => {
-            console.log("Your nodelist: " + elem);
+            // console.log("Your nodelist: " + elem);
         })
         return;
     }
@@ -199,21 +266,26 @@ const answerOpt = () => {
 startQ.addEventListener("click", () => {
     startQ.remove();
     createQuestion(startQ.id);
+    return;
 })
 
 let createQuestion = (btn) => {
+    console.log("question Created");
+    correction(btn);
     if(currentQuestIndex >= questions.length) {
         answerSheet.remove();
         questTitle.textContent = "Well done! Lets see your results.";
         submitQuiz(rightArr);
         return;
     }
-
+    // console.log("Quest index: " + currentQuestIndex + " question length: " + questions.length);
+    
     const currentQuest = questions[currentQuestIndex];
+    // console.log(currentQuest.question);
     const correctAnswerBtn = currentQuest.ans;
     //gör en prev question type variabel
-    console.log("First btn log " + btn);
-    correction(btn);
+    // console.log("First btn log " + btn);
+    
 
 
 
@@ -242,6 +314,7 @@ let createQuestion = (btn) => {
         answerB.value = currentQuest.alt.answerB;
         answerC.value = currentQuest.alt.answerC;
         answerD.value = currentQuest.alt.answerD;
+        answerSheet.innerHTML = "";
         answerSheet.append(answerA,answerB, answerC, answerD);
         answerA.addEventListener("click", createQ);
         answerB.addEventListener("click", createQ);
@@ -253,27 +326,45 @@ let createQuestion = (btn) => {
         
         
     } else {
-        console.log("continue", btn);
+        // console.log("continue", btn);
         if(currentQuest.type === "btnAns"){
             
             answerAll.forEach((elem) => {
                     elem.setAttribute("type", "button");
-                    console.log("buttons set");
+                    // console.log("buttons set");
                     elem.addEventListener("click", createQ);
 
 
             })
+            answerSheet.append(answerA, answerB, answerC, answerD);
         }
         if(currentQuest.type === "checkAns") { 
 
             console.log("Check type");
-            
-            //Varför kan inte append till answerSheet??
-            // quizContainer.innerHTML ="";
-            answerAll.forEach((button) => {
+
+            answerAll.forEach((button, index) => {
                 button.removeEventListener("click", createQ);
                 button.type = "checkbox";
+            
+                // const checkValue = document.createElement("label");
+                // checkValue.htmlFor = button.id;
+                // checkValue.textContent = currentQuest.alt["answerA"];
+                
+
+                    
+                    const ansDiv = document.createElement("div");
+                    const ansLabel = document.createElement("label");
+                    ansLabel.textContent = currentQuest.alt[`answer${answerOptions[index]}`];
+                    ansDiv.append(button, ansLabel);
+                    answerSheet.append(ansDiv);
+                // Clear answerSheet
+                // answerSheet.append(checkValue);
+                // answerSheet.innerHTML = "";
+                // answerSheet.append(checkValue);
             });
+
+
+            
             // button.setAttribute("type", "checkbox");
                 // const checkBox = document.createElement("input");
                 // checkBox.setAttribute("type", "checkbox");
@@ -281,17 +372,23 @@ let createQuestion = (btn) => {
                 // console.log(answerSheet);
                 // quizContainer.append(checkBox);
                 quizContainer.append(nxtBtn);
-            nxtBtn.addEventListener("click", (event) => {
-                const checkedAns = document.querySelectorAll("input[type='checkbox']:checked");
-                // checkedAns.forEach((box) => {
-                //     correction(box.id);
-                // })
-                console.log("ans id is " + checkedAns);
-                correction(checkedAns);
-                createQuestion(nxtBtn);
-                nxtBtn.remove();
+                
+            // nxtBtn.addEventListener("click", (event) => {
+            //     const checkedAns = document.querySelectorAll("input[type='checkbox']:checked");
+            //     // checkedAns.forEach((box) => {
+            //     //     correction(box.id);
+            //     // })
+            //     console.log("ans id is " + checkedAns);
+            //     correction(checkedAns);
+            //     checkedAns.forEach((box) => {
+            //         box.checked = false;
+            //     })
 
-            })
+            //     answerSheet.innerHTML = "";
+            //     createQuestion(nxtBtn);
+            //     nxtBtn.remove();
+
+            // })
             // nxtBtn.addEventListener("click", (event) => {
             //     createQuestion(event.target);
             //     nxtBtn.remove();
@@ -300,15 +397,18 @@ let createQuestion = (btn) => {
             
             
         }
-        console.log("here now");
-        console.log(answerA.getAttribute("type"));
-        answerSheet.innerHTML ="";
-        answerSheet.append(answerA,answerB, answerC, answerD);
+        // console.log("here now");
+        // console.log(answerA.getAttribute("type"));
+        // answerSheet.innerHTML ="";
+        // answerSheet.append(answerA, answerB, answerC, answerD);
         questTitle.innerText = currentQuest.question;
         
         answerA.value = currentQuest.alt.answerA;
+
         answerB.value = currentQuest.alt.answerB;
+
         answerC.value = currentQuest.alt.answerC;
+
         answerD.value = currentQuest.alt.answerD;
         //kör event listener function
         
