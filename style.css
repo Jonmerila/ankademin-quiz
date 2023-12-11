@@ -10,7 +10,7 @@ body {
 #dark {
   position: absolute;
   top: 25px;
-  right: 40px;
+  right: -70%;
   border: 2px solid rgb(174, 93, 245);
   background-color: rgb(104, 92, 234);
   color: white;
