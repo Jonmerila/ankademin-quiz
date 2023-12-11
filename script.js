@@ -9,6 +9,7 @@ const questionPresenter = document.querySelector(".questionTitle");
 const subAnswers = document.querySelector(".submit-answers");
 const printAns = document.querySelector(".print-ans");
 const lowCircle = document.querySelector(".lower-circle");
+
 const questions = [
     {
         question: "1: How many states are there in U.S.A?",
@@ -91,7 +92,7 @@ const questions = [
         
     },
     {
-        question: "8: Choose the planets that have 'rings' around them.",
+        question: "8: Choose the two planets that have 'rings' around them.",
         type: "checkAns",
         alt: {
             answerA: "Earth",
@@ -143,35 +144,24 @@ const startQ = document.querySelector("#startQ");
 let rightAnswers = 0;
 let currentAnswerIndex = 0;
 const currentQuest = questions[currentQuestIndex];
+
 const nxtBtn = document.createElement("input");
 nxtBtn.setAttribute("type", "button");
 nxtBtn.setAttribute("id", "nextAns");
 nxtBtn.value = "Next";
 
 const answerAll = document.querySelectorAll("[id^=answer]");
-// console.log(answerAll);
 
-const createQ = (event) => {
-    createQuestion(event.target)}
+const createQ = (event) => {createQuestion(event.target)}
 
 const eventListener = (btn) => {
-    console.log("Function körs");
-        // console.log(btn);
         if(btn.type === "button") {
-            // console.log("Rätt typ, evlist körs");
             btn.addEventListener("click", createQ);
         }
 }
-
-
-// quizContainer.append(nxtBtn);
-                
+         
 nxtBtn.addEventListener("click", (event) => {
     const checkedAns = document.querySelectorAll("input[type='checkbox']:checked");
-    // checkedAns.forEach((box) => {
-    //     correction(box.id);
-    // })
-    console.log("ans id is " + checkedAns);
     correction(checkedAns);
     checkedAns.forEach((box) => {
         box.checked = false;
@@ -180,7 +170,6 @@ nxtBtn.addEventListener("click", (event) => {
     answerSheet.innerHTML = "";
     createQuestion(nxtBtn);
     nxtBtn.remove();
-
 });
 
 const submitQuiz = (arr) => {
@@ -188,8 +177,6 @@ const submitQuiz = (arr) => {
     const subBtn = document.createElement("button");
     subBtn.textContent = "Submit";
     subAnswers.append(subBtn);
-    // console.log(arr);
-    // console.log("done");
 
     subBtn.addEventListener("click", () => {
         subAnswers.innerHTML = "";
@@ -200,7 +187,6 @@ const submitQuiz = (arr) => {
             rightArr.includes(quest.question) ? ansPara.style.color = "green" : ansPara.style.color = "red";
             printAns.append(ansPara);
 
-            //Sätt in användarens svar om fel
             if(ansPara.style.color === "red"){
                 const corrAnswer = document.createElement("p");
                 if(Array.isArray(quest.ans)) {
@@ -222,10 +208,9 @@ const submitQuiz = (arr) => {
 const correction = (btn) => {
     if(btn === "startQ"){
         return;
-    };
-    // console.log("btn is: " + btn);
+    }
+
     let nodeArray = [];
-    let userAns = [];
     const prevQuestion = questions[currentQuestIndex -1];
     const prevAnswer = prevQuestion.ans;
     if(btn instanceof NodeList){
@@ -233,38 +218,25 @@ const correction = (btn) => {
             nodeArray.push(elem.id);
         });
             
-            if(nodeArray.toString() === prevAnswer.toString()) {
-                rightArr.push(prevQuestion.question);
-                rightAnswers++; 
-                return;
-            }
+        if(nodeArray.toString() === prevAnswer.toString()) {
+            rightArr.push(prevQuestion.question);
+            rightAnswers++; 
             return;
-        
+        }
+        return;    
     }
-
+    if(btn.id === "nextAns") {
+        return;
+    }
     if(btn !== undefined) {
         
         const ans = btn.id;
-        // console.log("Correct: " + prevAnswer, "Your ans: "+ btn.id);
         if(ans === prevAnswer) {
-            // console.log("Right");
-            // console.log(prevQuestion.question);
             rightArr.push(prevQuestion.question);
             rightAnswers++;
-            // console.log(rightArr);
-        } else {
-            // console.log("Wrong");
         }
         return;
     }
-    if(btn.id === "nextAns") {
-        btn.forEach((elem) => {
-            // console.log("Your nodelist: " + elem);
-        })
-        return;
-    }
-    
-    
 }
 
 const answerOpt = () => {
@@ -282,7 +254,6 @@ startQ.addEventListener("click", () => {
 })
 
 let createQuestion = (btn) => {
-    console.log("question Created");
     correction(btn);
     if(currentQuestIndex >= questions.length) {
         answerSheet.remove();
@@ -290,192 +261,47 @@ let createQuestion = (btn) => {
         submitQuiz(rightArr);
         return;
     }
-    // console.log("Quest index: " + currentQuestIndex + " question length: " + questions.length);
-    
+
     const currentQuest = questions[currentQuestIndex];
-    // console.log(currentQuest.question);
-    const correctAnswerBtn = currentQuest.ans;
-    //gör en prev question type variabel
-    // console.log("First btn log " + btn);
-    
-
-
-
     if(btn === "startQ") {
-        console.log("Starting");
-    
-    
-
-        if(currentQuest.type === "btnAns"){         
-        }
-        if(currentQuest.type === "checkAns"){    
-        }
-          
-
-
-    
         answerA.classList.remove("hide");
         answerB.classList.remove("hide");
 
-    
-        
-        
         questTitle.innerText = "";
         questTitle.innerText = currentQuest.question;
-        answerA.value = currentQuest.alt.answerA;
-        answerB.value = currentQuest.alt.answerB;
-        answerC.value = currentQuest.alt.answerC;
-        answerD.value = currentQuest.alt.answerD;
+        answerOptions.forEach((opt) => {
+            window[`answer${opt}`].value = currentQuest.alt[`answer${opt}`];
+        })
         answerSheet.innerHTML = "";
         answerSheet.append(answerA,answerB, answerC, answerD);
-        answerA.addEventListener("click", createQ);
-        answerB.addEventListener("click", createQ);
-        answerC.addEventListener("click", createQ);
-        answerD.addEventListener("click", createQ);
-        //Loopa igenom, ge nytt värde och lägg till eventlistener
-        //{`answer` + letter}
         answerOpt();
-        
-        
     } else {
-        // console.log("continue", btn);
-        if(currentQuest.type === "btnAns"){
-            
+        if(currentQuest.type === "btnAns"){       
             answerAll.forEach((elem) => {
                     elem.setAttribute("type", "button");
-                    // console.log("buttons set");
                     elem.addEventListener("click", createQ);
-
-
             })
             answerSheet.append(answerA, answerB, answerC, answerD);
         }
         if(currentQuest.type === "checkAns") { 
-
-            console.log("Check type");
-
             answerAll.forEach((button, index) => {
                 button.removeEventListener("click", createQ);
                 button.type = "checkbox";
-            
-                // const checkValue = document.createElement("label");
-                // checkValue.htmlFor = button.id;
-                // checkValue.textContent = currentQuest.alt["answerA"];
-                
-
-                    
-                    const ansDiv = document.createElement("div");
-                    const ansLabel = document.createElement("label");
-                    ansLabel.textContent = currentQuest.alt[`answer${answerOptions[index]}`];
-                    ansDiv.append(button, ansLabel);
-                    answerSheet.append(ansDiv);
-                // Clear answerSheet
-                // answerSheet.append(checkValue);
-                // answerSheet.innerHTML = "";
-                // answerSheet.append(checkValue);
+                const ansDiv = document.createElement("div");
+                const ansLabel = document.createElement("label");
+                ansLabel.textContent = currentQuest.alt[`answer${answerOptions[index]}`];
+                ansDiv.append(button, ansLabel);
+                answerSheet.append(ansDiv);
             });
-
-
-            
-            // button.setAttribute("type", "checkbox");
-                // const checkBox = document.createElement("input");
-                // checkBox.setAttribute("type", "checkbox");
-                // checkBox.setAttribute("id", button.id);
-                // console.log(answerSheet);
-                // quizContainer.append(checkBox);
                 lowCircle.append(nxtBtn);
-                
-            // nxtBtn.addEventListener("click", (event) => {
-            //     const checkedAns = document.querySelectorAll("input[type='checkbox']:checked");
-            //     // checkedAns.forEach((box) => {
-            //     //     correction(box.id);
-            //     // })
-            //     console.log("ans id is " + checkedAns);
-            //     correction(checkedAns);
-            //     checkedAns.forEach((box) => {
-            //         box.checked = false;
-            //     })
-
-            //     answerSheet.innerHTML = "";
-            //     createQuestion(nxtBtn);
-            //     nxtBtn.remove();
-
-            // })
-            // nxtBtn.addEventListener("click", (event) => {
-            //     createQuestion(event.target);
-            //     nxtBtn.remove();
-            // });
-            
-            
-            
         }
-        // console.log("here now");
-        // console.log(answerA.getAttribute("type"));
-        // answerSheet.innerHTML ="";
-        // answerSheet.append(answerA, answerB, answerC, answerD);
-
-        // answerOptions.forEach((option) => {
-        //     const ansKey = `answer${option}`;
-        //     const ansElem = window[answerKey];
-        //     ansElem.value = currentQuest.alt[ansKey];
-        // })
         questTitle.innerText = currentQuest.question;
         
-        answerA.value = currentQuest.alt.answerA;
-
-        answerB.value = currentQuest.alt.answerB;
-
-        answerC.value = currentQuest.alt.answerC;
-
-        answerD.value = currentQuest.alt.answerD;
-        //kör event listener function
-        
+        answerOptions.forEach((opt) => {
+            window[`answer${opt}`].value = currentQuest.alt[`answer${opt}`];
+        })
     }
-    
-    
-
     currentQuest.alt.answerC ? answerC.classList.remove("hide") : answerC.classList.add("hide");
     currentQuest.alt.answerD ? answerD.classList.remove("hide"): answerD.classList.add("hide");
     currentQuestIndex++;
 }
-
-
-
-
-
-
-
-
-
-                    // for(let i=0; i<numOfKeys; i++) {
-                    //     if(numOfKeys > ansOptions.length){
-                    //         answer[i].innerText = 
-                    //         console.log(currentQuest.ans[i]);
-                    //     }
-                    // }
-//console.log("kill me");
-// answerAll.forEach(btn => {
-//     btn.addEventListener('click', event => {
-//         quizAnswerSheet.forEach((elem) => {
-//             if(quizAnswerSheet[answerCount] === elem){
-//                 console.log("Right");
-//                 //Right answer function plays
-//                 return;
-//             } else {
-
-//                 //Wrong answer function plays
-
-//             }
-//             answerCount++;
-//        }) 
-//     });
-//  });
-
-
-
-
- // Question 1 körs och question countern börjar på 0, 
- //när ett svar ges så blir det answer++ och nästa fråga körs.
- //När nästa fråga ställs så ska logiken gå igenom answer varibeln och kolla
- //värdet och sedan kolla om answer index stämmer rätt med answerSheet arrayen.
-
