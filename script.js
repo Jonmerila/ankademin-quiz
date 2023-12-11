@@ -9,6 +9,7 @@ const questionPresenter = document.querySelector(".questionTitle");
 const subAnswers = document.querySelector(".submit-answers");
 const printAns = document.querySelector(".print-ans");
 const lowCircle = document.querySelector(".lower-circle");
+const darkMode = document.querySelector("#dark");
 
 const questions = [
     {
@@ -134,6 +135,7 @@ const questions = [
 
 const darkModeFunc = () => {
     document.body.classList.toggle("dark");
+    darkMode.textContent = document.body.classList.contains("dark") ? "Light Mode" : "Dark Mode";
 }
 let rightArr = [];
 const answerOptions = ["A", "B", "C", "D"];

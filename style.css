@@ -1,4 +1,5 @@
 body {
+  padding: 0;
   background: radial-gradient(circle, rgb(134, 123, 255) 0%, rgb(194, 136, 246) 100%);
   color: white;
   display: flex;
@@ -159,4 +160,13 @@ button:hover {
 .print-ans p {
   color: black;
   font-size: 20px;
+}
+
+@media (max-width: 425px) {
+  img {
+    top: -7%;
+  }
+  .quiz {
+    top: 34%;
+  }
 }/*# sourceMappingURL=style.css.map */
