@@ -1,7 +1,7 @@
 @import "./partials/mixins";
 
 body {
-    padding-top: 100px;
+    
     background: radial-gradient(circle, rgb(134, 123, 255) 0%, rgb(194, 136, 246) 100%);
     color: white;
     display:flex;
@@ -26,7 +26,6 @@ body {
 }
 
 .rotating {
-    
     border-radius: 50%;
     height: 600px;
     width:600px;
@@ -45,7 +44,7 @@ body {
 
 .quiz {
     position: absolute;
-    top: 76%;
+    top: 37%;
     left: 50%;
     transform: translate(-50%, -50%);
 

@@ -1,5 +1,4 @@
 body {
-  padding-top: 100px;
   background: radial-gradient(circle, rgb(134, 123, 255) 0%, rgb(194, 136, 246) 100%);
   color: white;
   display: flex;
@@ -48,7 +47,7 @@ body {
 
 .quiz {
   position: absolute;
-  top: 76%;
+  top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid white;
