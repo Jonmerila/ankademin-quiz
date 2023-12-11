@@ -12,14 +12,14 @@ const lowCircle = document.querySelector(".lower-circle");
 
 const questions = [
     {
-        question: "1: How many states are there in U.S.A?",
+        question: "1: What is the critical Reynolds Number for the onset of turbulent flow during the re-entry of a spacecraft into Earth's atmosphere?",
         type: "btnAns",
         alt: {
-            answerA: "1",
-            answerB: "46",
-            answerC: "50"
+            answerA: "1,000,000",
+            answerB: "2,000,000",
+            answerC: "The what"
         },
-        ans:"answerC"
+        ans:"answerB"
 
     },
     {
@@ -209,18 +209,16 @@ const submitQuiz = (arr) => {
         console.log(score);
         score.textContent = "Your final score was: ";
         finalScore.textContent = `${rightAnswers}/${questions.length}`;
-        if(rightAnswers/10 > 0.75){
-            finalScore.style.color = "green";
-            finalScore.textContent += " - Well done!";
-        }
-        if(rightAnswers/10 > 0.5 && rightAnswers/100 < 0.75){
-            finalScore.style.color = "orange";
-            finalScore.textContent += " - Good.";
-        }
-        if(rightAnswers/10 < 0.5){
-            finalScore.style.color = "red";
-            finalScore.textContent += " - Failure.";
-        }
+        console.log(rightAnswers/10);
+        const scorePerc = rightAnswers/10;
+        finalScore.style.color =
+        scorePerc > 0.75 ? "green" :
+        scorePerc > 0.5 ? "orange" :
+        "red";
+        finalScore.textContent += 
+        scorePerc > 0.75 ? " - Well done!":
+        scorePerc > 0.5 ? " - Good." :
+        " - Failure.";
         score.append(finalScore);
         printAns.append(score);
     })
