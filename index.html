@@ -8,26 +8,29 @@
     <title>Quizlet - Ankademin</title>
 </head>
 <body>
-    <div class="quiz">
-<h1>Quizlet - Ankademin</h1>
-    <p>Quick quiz on whatever, good luck.</p>
-    <button id="dark" onclick="darkModeFunc()">Dark/light Mode</button>
-    <div class="questionTitle"></div>
-    <div class="container">
-
-        <div class="lower-circle">
-            <p>Multi-answer questions will be marked with a next button.</p>
-            <div class="answerSheet">
-                <button id="startQ">Start Quiz!</button>
-                <input type="button" id="answerA" value="" class="hide"/>
-                <input type="button" id="answerB" value="" class="hide"/>
-                <input type="button" id="answerC" value="" class="hide"/>
-                <input type="button" id="answerD" value="" class="hide"/>
+    <div class="rotating">
+        <img src="./images/newSpaceCraft.gif" alt="Spacecraft">
+    </div>
+        <div class="quiz">
+            <h1>Quizlet - Ankademin</h1>
+            <p>Quick quiz on whatever, good luck.</p>
+            <button id="dark" onclick="darkModeFunc()">Dark/light Mode</button>
+            <div class="questionTitle"></div>
+            <div class="container">
+                <div class="lower-circle">
+                    <p>Multi-answer questions will be marked with a next button.</p>
+                    <div class="answerSheet">
+                        <button id="startQ">Start Quiz!</button>
+                        <input type="button" id="answerA" value="" class="hide"/>
+                        <input type="button" id="answerB" value="" class="hide"/>
+                        <input type="button" id="answerC" value="" class="hide"/>
+                        <input type="button" id="answerD" value="" class="hide"/>
+                    </div>
+                    <div class="submit-answers"></div>
+                </div>
             </div>
-            <div class="submit-answers"></div>
         </div>
-    </div>
-    </div>
+    
     <div class="print-ans hide"></div>
 </body>
 </html>

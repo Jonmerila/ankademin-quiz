@@ -1,9 +1,8 @@
 @import "./partials/mixins";
 
 body {
-    background: rgb(73,58,255);
+    padding-top: 100px;
     background: radial-gradient(circle, rgb(134, 123, 255) 0%, rgb(194, 136, 246) 100%);
-
     color: white;
     display:flex;
     flex-direction: column;
@@ -26,9 +25,31 @@ body {
     display:none;
 }
 
-
+.rotating {
+    
+    border-radius: 50%;
+    height: 600px;
+    width:600px;
+    animation: animate 28s linear infinite;
+    
+    img {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        top: -5%;
+        left: 50%;
+        transform: translateX(-50%);
+        
+    }
+}
 
 .quiz {
+    position: absolute;
+    top: 76%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
     border: 1px solid white;
     border-radius: 50%;
     height: 550px;
@@ -38,6 +59,18 @@ body {
     align-items: center;
     flex-direction: column;
 }
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }
+ 
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+
 
 .questionTitle {
     display:flex;
@@ -51,13 +84,11 @@ body {
 
 }
 
-.btnStyling {
-    @include btnStyle;
-}
 .container {
     display:flex;
     justify-content:center;
     align-items:center;
+   
     
     .lower-circle {
         display:flex;
@@ -73,10 +104,7 @@ body {
             font-size: 14px;
             width: 60%;    
         }
-
     }
-
-    
      .questionTitle{
         width: 70%;
      }
@@ -85,7 +113,6 @@ body {
         justify-content:center;
         align-items:center;
         gap: 10px;
-
         
         input[type="button"], button{
             height: 30px;
@@ -95,6 +122,13 @@ body {
     #nextAns {
         margin-top: 8px;
     }
+}
+
+.btnStyling {
+    @include btnStyle;
+}
+button {
+    @include btnStyle;
 }
 
 .print-ans{
