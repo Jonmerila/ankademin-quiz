@@ -2,15 +2,24 @@
   display: none;
 }
 
-body {
+.quiz {
   border: 1px solid black;
   border-radius: 50%;
-  height: 400px;
-  width: 400px;
+  height: 550px;
+  width: 550px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.questionTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.questionTitle h2 {
+  width: 70%;
 }
 
 .container {
@@ -18,8 +27,14 @@ body {
   justify-content: center;
   align-items: center;
 }
-.container p {
+.container .lower-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .lower-circle p {
   font-size: 12px;
+  width: 60%;
 }
 .container .questionTitle {
   width: 70%;
@@ -29,6 +44,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-.container #answerNxt {
-  align-self: center;
+.container #nextAns {
+  margin-top: 8px;
 }/*# sourceMappingURL=style.css.map */

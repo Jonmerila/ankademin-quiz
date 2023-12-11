@@ -7,8 +7,8 @@ const answerSheet = document.querySelector(".answerSheet");
 const quizContainer = document.querySelector(".container");
 const questionPresenter = document.querySelector(".questionTitle");
 const subAnswers = document.querySelector(".submit-answers");
-
-
+const printAns = document.querySelector(".print-ans");
+const lowCircle = document.querySelector(".lower-circle");
 const questions = [
     {
         question: "1: How many states are there in U.S.A?",
@@ -198,7 +198,22 @@ const submitQuiz = (arr) => {
             ansPara = document.createElement("h3");
             ansPara.textContent = quest.question;
             rightArr.includes(quest.question) ? ansPara.style.color = "green" : ansPara.style.color = "red";
-            subAnswers.append(ansPara);
+            printAns.append(ansPara);
+
+            //Sätt in användarens svar om fel
+            if(ansPara.style.color === "red"){
+                const corrAnswer = document.createElement("p");
+                if(Array.isArray(quest.ans)) {
+                    corrAnswer.textContent += `Correct answers was `;
+                    quest.ans.forEach((ans) => {
+                        corrAnswer.textContent += `${ans}: ${quest.alt[ans]} `;
+                    })
+                } else {
+                    corrAnswer.textContent = `Correct answer was ${quest.ans} : ${quest.alt[quest.ans]} `;
+                }
+                corrAnswer.style.color = "red";
+                printAns.append(corrAnswer);
+            }
         })
     })
         
@@ -210,6 +225,7 @@ const correction = (btn) => {
     };
     // console.log("btn is: " + btn);
     let nodeArray = [];
+    let userAns = [];
     const prevQuestion = questions[currentQuestIndex -1];
     const prevAnswer = prevQuestion.ans;
     if(btn instanceof NodeList){
@@ -219,12 +235,8 @@ const correction = (btn) => {
             
             if(nodeArray.toString() === prevAnswer.toString()) {
                 rightArr.push(prevQuestion.question);
-                rightAnswers++;
-                
+                rightAnswers++; 
                 return;
-            } else {
-                // console.log("Wrong " + nodeArray + " The answer was " + prevAnswer);
-                // console.log(nodeArray, prevAnswer)
             }
             return;
         
@@ -371,7 +383,7 @@ let createQuestion = (btn) => {
                 // checkBox.setAttribute("id", button.id);
                 // console.log(answerSheet);
                 // quizContainer.append(checkBox);
-                quizContainer.append(nxtBtn);
+                lowCircle.append(nxtBtn);
                 
             // nxtBtn.addEventListener("click", (event) => {
             //     const checkedAns = document.querySelectorAll("input[type='checkbox']:checked");
@@ -401,6 +413,12 @@ let createQuestion = (btn) => {
         // console.log(answerA.getAttribute("type"));
         // answerSheet.innerHTML ="";
         // answerSheet.append(answerA, answerB, answerC, answerD);
+
+        // answerOptions.forEach((option) => {
+        //     const ansKey = `answer${option}`;
+        //     const ansElem = window[answerKey];
+        //     ansElem.value = currentQuest.alt[ansKey];
+        // })
         questTitle.innerText = currentQuest.question;
         
         answerA.value = currentQuest.alt.answerA;
