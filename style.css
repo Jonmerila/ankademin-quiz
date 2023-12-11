@@ -1,9 +1,38 @@
+body {
+  background: rgb(73, 58, 255);
+  background: radial-gradient(circle, rgb(134, 123, 255) 0%, rgb(194, 136, 246) 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#dark {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  border: 2px solid rgb(174, 93, 245);
+  background-color: rgb(104, 92, 234);
+  color: white;
+  border-radius: 6px;
+}
+#dark:hover {
+  cursor: pointer;
+  scale: 1.05;
+}
+
+.dark {
+  background: rgb(19, 5, 190);
+  background: radial-gradient(circle, rgb(19, 5, 190) 0%, rgb(87, 29, 138) 68%);
+}
+
 .hide {
   display: none;
 }
 
 .quiz {
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 50%;
   height: 550px;
   width: 550px;
@@ -20,6 +49,18 @@
 }
 .questionTitle h2 {
   width: 70%;
+  font-size: 26px;
+}
+
+.btnStyling {
+  border: 2px solid rgb(174, 93, 245);
+  background-color: rgb(104, 92, 234);
+  color: white;
+  border-radius: 6px;
+}
+.btnStyling:hover {
+  cursor: pointer;
+  scale: 1.05;
 }
 
 .container {
@@ -32,8 +73,19 @@
   flex-direction: column;
   align-items: center;
 }
+.container .lower-circle #nextAns {
+  border: 2px solid rgb(174, 93, 245);
+  background-color: rgb(104, 92, 234);
+  color: white;
+  border-radius: 6px;
+  height: 30px;
+}
+.container .lower-circle #nextAns:hover {
+  cursor: pointer;
+  scale: 1.05;
+}
 .container .lower-circle p {
-  font-size: 12px;
+  font-size: 14px;
   width: 60%;
 }
 .container .questionTitle {
@@ -43,7 +95,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+}
+.container .answerSheet input[type=button], .container .answerSheet button {
+  height: 30px;
+  border: 2px solid rgb(174, 93, 245);
+  background-color: rgb(104, 92, 234);
+  color: white;
+  border-radius: 6px;
+}
+.container .answerSheet input[type=button]:hover, .container .answerSheet button:hover {
+  cursor: pointer;
+  scale: 1.05;
 }
 .container #nextAns {
   margin-top: 8px;
+}
+
+.print-ans {
+  background-color: white;
+  box-shadow: 2px 0px 12px black;
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 8px;
+}
+.print-ans p {
+  color: black;
+  font-size: 20px;
 }/*# sourceMappingURL=style.css.map */

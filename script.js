@@ -132,6 +132,9 @@ const questions = [
     }
 ];
 
+const darkModeFunc = () => {
+    document.body.classList.toggle("dark");
+}
 let rightArr = [];
 const answerOptions = ["A", "B", "C", "D"];
 let currentQuestIndex = 0;
@@ -180,7 +183,7 @@ const submitQuiz = (arr) => {
 
     subBtn.addEventListener("click", () => {
         subAnswers.innerHTML = "";
-
+    printAns.classList.remove("hide");    
         questions.forEach((quest) => {
             ansPara = document.createElement("h3");
             ansPara.textContent = quest.question;
@@ -201,6 +204,25 @@ const submitQuiz = (arr) => {
                 printAns.append(corrAnswer);
             }
         })
+        const score = document.createElement("p");
+        const finalScore = document.createElement("span")
+        console.log(score);
+        score.textContent = "Your final score was: ";
+        finalScore.textContent = `${rightAnswers}/${questions.length}`;
+        if(rightAnswers/10 > 0.75){
+            finalScore.style.color = "green";
+            finalScore.textContent += " - Well done!";
+        }
+        if(rightAnswers/10 > 0.5 && rightAnswers/100 < 0.75){
+            finalScore.style.color = "orange";
+            finalScore.textContent += " - Good.";
+        }
+        if(rightAnswers/10 < 0.5){
+            finalScore.style.color = "red";
+            finalScore.textContent += " - Failure.";
+        }
+        score.append(finalScore);
+        printAns.append(score);
     })
         
 }

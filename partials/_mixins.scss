@@ -1,0 +1,11 @@
+@mixin btnStyle {
+    border: 2px solid rgb(174, 93, 245);
+            background-color:rgb(104, 92, 234);
+            color: white;
+            border-radius: 6px;
+            &:hover{
+                cursor:pointer;
+                scale: 1.05;
+            }
+
+}
