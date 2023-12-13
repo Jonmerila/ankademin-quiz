@@ -24,42 +24,42 @@ const questions = [
 
     },
     {
-        question: "2: How many arms do ducks have?",
+        question: "2: What would you find if you travelled to the centre of the solar system??",
         type: "btnAns",
         alt: {
-            answerA: "3",
-            answerB: "2",
-            answerC: "Ducks don't have arms"
+            answerA: "The Earth",
+            answerB: "The One Piece",
+            answerC: "The Sun"
         },
         ans: "answerC"
         
     },
     {
-        question: "3: Is frontend better than backend?",
+        question: "3: What is the name of the force which keeps the planets in orbit around the sun??",
         type: "btnAns",
         alt: {
-            answerA: "Yes",
-            answerB: "No",
-            answerC: "I don't know"
+            answerA: "Gravity",
+            answerB: "Superglue",
+            answerC: "Electricity"
         },
         ans: "answerA"
         
     },
     {
-        question: "4: Check the boxes that are to the right:",
+        question: "4: Which two planets take less time than Earth to orbit the sun?:",
         type: "checkAns",
         alt: {
-            answerA: "Not here",
-            answerB: "Not here",
-            answerC: "Here",
-            answerD: "Here"
+            answerA: "Earth",
+            answerB: "Saturn",
+            answerC: "Mercury",
+            answerD: "Venus"
             
         },
         ans: ["answerC", "answerD"],
         
     },
     {
-        question: "5: Hummingbirds can fly backwards",
+        question: "5: The approximate temperature on the sun is about 5,500 degrees celsius",
         type: "btnAns",
         alt: {
             answerA: "True",
@@ -70,13 +70,13 @@ const questions = [
         
     },
     {
-        question: "6: What is Floyd Mayweather most famous for?",
+        question: "6: Who discovered Uranus?",
         type: "btnAns",
         alt: {
-            answerA: "Singing",
-            answerB: "Painting",
-            answerC: "Terrorist",
-            answerD: "Boxer"
+            answerA: "Donald Duck",
+            answerB: "Brandon",
+            answerC: "Spongebob",
+            answerD: "William Herschel"
             
         },
         ans: "answerD",
@@ -137,6 +137,8 @@ const darkModeFunc = () => {
     document.body.classList.toggle("dark");
     darkMode.textContent = document.body.classList.contains("dark") ? "Light Mode" : "Dark Mode";
 }
+
+
 let rightArr = [];
 const answerOptions = ["A", "B", "C", "D"];
 let currentQuestIndex = 0;
@@ -212,7 +214,7 @@ const submitQuiz = (arr) => {
         score.textContent = "Your final score was: ";
         finalScore.textContent = `${rightAnswers}/${questions.length}`;
         console.log(rightAnswers/10);
-        const scorePerc = rightAnswers/10;
+        const scorePerc = rightAnswers/ questions.length;
         finalScore.style.color =
         scorePerc > 0.75 ? "green" :
         scorePerc > 0.5 ? "orange" :
